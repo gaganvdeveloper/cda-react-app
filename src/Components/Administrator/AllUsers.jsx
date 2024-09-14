@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Ip from "../../Util/Ip";
 import UserDetails from "./UserDetails";
+import { motion } from "framer-motion";
 
 const AllUsers = () => {
   const [students, setStudents] = useState([]);
@@ -28,6 +29,21 @@ const AllUsers = () => {
       });
   }, [modal]);
 
+  const gridContainerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.25,
+      },
+    },
+  };
+
+  const gridSquareVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
+  };
+
   return (
     <>
       {modal && <UserDetails setModal={setModal} userId={userId} />}
@@ -37,9 +53,15 @@ const AllUsers = () => {
           <h1 className="text-2xl md:text-3xl font-bold text-green-600 text-center tracking-widest underline">
             Students
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
+          <motion.div
+            variants={gridContainerVariants}
+            initial="hidden"
+            animate="show"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6"
+          >
             {students.map((s, index) => (
-              <div
+              <motion.div
+                variants={gridSquareVariants}
                 key={index}
                 className="bg-green-300 w-full rounded-xl p-6 shadow-lg"
               >
@@ -66,7 +88,7 @@ const AllUsers = () => {
                       ? s.department.name
                       : "Department Not Assigned"}
                   </h1>
-                  <h1>{s.year===null?"----":s.year}</h1>
+                  <h1>{s.year === null ? "----" : s.year}</h1>
                 </div>
                 <button
                   onClick={() => {
@@ -77,9 +99,9 @@ const AllUsers = () => {
                 >
                   Details
                 </button>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* Faculties Section */}

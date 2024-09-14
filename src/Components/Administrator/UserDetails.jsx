@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Ip from "../../Util/Ip";
 import AssignDepartment from "./AssignDepartment";
 import AssignYear from "./AssignYear";
+import CourseDetails from "../Course/CourseDetails";
 
 const UserDetails = ({ setModal, userId }) => {
   const ref = useRef();
@@ -11,7 +12,7 @@ const UserDetails = ({ setModal, userId }) => {
   const [showImage, setShowImage] = useState(false);
   const [departmentModal, setDepartmentModal] = useState(false);
   const [yearModal, setYearModal] = useState(false);
-
+  const [courseModal, setCourseModal] = useState(false);
   const closeModal = (e) => {
     if (e.target === ref.current) setModal(false);
   };
@@ -27,7 +28,6 @@ const UserDetails = ({ setModal, userId }) => {
             .then((response) => {
               setProfile(response.data.body);
               setShowImage(true);
-              // console.log(profile.year==null?"Year Not Assigned":profile.year);
             })
             .catch((error) => {
               console.log(error);
@@ -59,12 +59,15 @@ const UserDetails = ({ setModal, userId }) => {
         />
       )}
       {yearModal && <AssignYear setYearModal={setYearModal} userId={userId} />}
+      {courseModal && (
+        <CourseDetails setCourseModal={setCourseModal} userId={userId} />
+      )}
       <div
         onClick={closeModal}
         ref={ref}
-        className="z-10 fixed  inset-0 flex flex-col items-center justify-center backdrop-blur-sm "
+        className="z-10 fixed  inset-0 flex flex-col items-center justify-center backdrop-blur-md "
       >
-        <div className="w-[95%] md:w-[90%] lg:w-1/2 bg-purple-600 text-white rounded-2xl px-8 py-8">
+        <div className="w-[95%] md:w-[90%] lg:w-1/2 bg-slate-500 text-white rounded-2xl px-8 py-8">
           <div className="flex flex-col gap-2 items-center lg:flex-row lg:items-start justify-evenly ">
             {showImage && (
               <img
@@ -75,92 +78,105 @@ const UserDetails = ({ setModal, userId }) => {
               />
             )}
             {showImage && (
-              <table className=" font-semibold ">
-                <thead>
+              <>
+                <table className=" font-semibold ">
+                  <thead>
+                    <tr>
+                      <th
+                        colSpan={2}
+                        className="text-2xl px-2 bg-green-200 text-green-700 rounded-lg"
+                      >
+                        {user.name.length <= 20
+                          ? user.name
+                          : user.name.substring(0, 20) + "..."}
+                      </th>
+                    </tr>
+                  </thead>
                   <tr>
-                    <th
-                      colSpan={2}
-                      className="text-2xl px-2 bg-green-200 text-green-700 rounded-lg"
-                    >
-                      {user.name.length <= 20
-                        ? user.name
-                        : user.name.substring(0, 20) + "..."}
-                    </th>
+                    <td>Email</td>
+                    <td>: {user.email}</td>
                   </tr>
-                </thead>
-                <tr>
-                  <td>Email</td>
-                  <td>: {user.email}</td>
-                </tr>
-                <tr>
-                  <td>Phone</td>
-                  <td>: {user.phone}</td>
-                </tr>
-                <tr>
-                  <td>Role</td>
-                  <td>: {user.role}</td>
-                </tr>
-                <tr>
-                  <td>Status</td>
-                  <td>: {user.status}</td>
-                </tr>
-                <tr>
-                  <td>Username</td>
-                  <td>: {user.username}</td>
-                </tr>
-                <tr>
-                  <td>Password</td>
-                  <td>: {user.password}</td>
-                </tr>
-                {profile.user.role === "STUDENT" ? (
+                  <tr>
+                    <td>Phone</td>
+                    <td>: {user.phone}</td>
+                  </tr>
+                  <tr>
+                    <td>Role</td>
+                    <td>: {user.role}</td>
+                  </tr>
+                  <tr>
+                    <td>Status</td>
+                    <td>: {user.status}</td>
+                  </tr>
+                  <tr>
+                    <td>Username</td>
+                    <td>: {user.username}</td>
+                  </tr>
+                  <tr>
+                    <td>Password</td>
+                    <td>: {user.password}</td>
+                  </tr>
+                  {profile.user.role === "STUDENT" ? (
+                    <tr className="border-b-2">
+                      <td>Year</td>
+                      <td>
+                        :
+                        {profile.year == null
+                          ? " Year Not Assigned"
+                          : " " + profile.year}
+                      </td>
+                      <td>
+                        <button
+                          className="pl-6 outline-none"
+                          onClick={() => {
+                            setYearModal(true);
+                          }}
+                        >
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  ) : (
+                    <></>
+                  )}
                   <tr className="border-b-2">
-                    <td>Year</td>
+                    <td>Department</td>
                     <td>
                       :
-                      {profile.year == null
-                        ? " Year Not Assigned"
-                        : profile.year}
+                      {showImage && profile.department === null
+                        ? " Not Assigned"
+                        : " " + profile.department.name}
                     </td>
                     <td>
                       <button
                         className="pl-6 outline-none"
                         onClick={() => {
-                          setYearModal(true);
+                          setDepartmentModal(true);
                         }}
                       >
                         Edit
                       </button>
                     </td>
                   </tr>
-                ) : (
-                  <></>
-                )}
-                <tr className="border-b-2">
-                  <td>Department</td>
-                  <td>
-                    :
-                    {showImage && profile.department === null
-                      ? " Not Assigned"
-                      : " " + profile.department.name}
-                  </td>
-                  <td>
-                    <button
-                      className="pl-6 outline-none"
-                      onClick={() => {
-                        setDepartmentModal(true);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              </table>
+                  {profile.user.role === "STUDENT" ? (
+                    <tr>
+                      <td colSpan={2} className="py-2">
+                        <button
+                          onClick={() => {
+                            setCourseModal(true);
+                          }}
+                          className="py-1 px-2 hover:text-green-600  rounded-lg  hover:bg-white transition-all -mr-16 underline-offset-4 underline float-right"
+                        >
+                          Course Details
+                        </button>
+                      </td>
+                    </tr>
+                  ) : (
+                    <></>
+                  )}
+                </table>
+              </>
             )}
-            {/* <div className="">
-            <div className="">
-              <h1>Course</h1>
-            </div>
-          </div> */}
           </div>
         </div>
       </div>

@@ -41,11 +41,8 @@ const AllCourses = () => {
         <div className=" grid grid-cols-3 gap-6">
           {courses.map((c, index) => {
             return (
-              <>
-                <div
-                  key={c.id}
-                  className="bg-green-300 text-green-800 px-6 py-4 flex flex-col justify-between min-h-60 rounded-lg shadow-lg "
-                >
+              <div key={c.id}>
+                <div className="bg-green-300 text-green-800 px-6 py-4 flex flex-col justify-between min-h-60 rounded-lg shadow-lg ">
                   <div>
                     <h1 className="my-2 px-6 text-lg font-bold">
                       <span className="text-xl font-bold bg-yellow-300 px-2 tracking-wide text-center rounded-lg block">
@@ -86,7 +83,7 @@ const AllCourses = () => {
                     </button>
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
         </div>
