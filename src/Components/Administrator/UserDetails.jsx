@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Ip from "../../Util/Ip";
 import AssignDepartment from "./AssignDepartment";
+import AssignYear from "./AssignYear";
 
 const UserDetails = ({ setModal, userId }) => {
   const ref = useRef();
@@ -9,6 +10,7 @@ const UserDetails = ({ setModal, userId }) => {
   const [profile, setProfile] = useState(null);
   const [showImage, setShowImage] = useState(false);
   const [departmentModal, setDepartmentModal] = useState(false);
+  const [yearModal, setYearModal] = useState(false);
 
   const closeModal = (e) => {
     if (e.target === ref.current) setModal(false);
@@ -25,6 +27,7 @@ const UserDetails = ({ setModal, userId }) => {
             .then((response) => {
               setProfile(response.data.body);
               setShowImage(true);
+              // console.log(profile.year==null?"Year Not Assigned":profile.year);
             })
             .catch((error) => {
               console.log(error);
@@ -45,7 +48,7 @@ const UserDetails = ({ setModal, userId }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, [userId, departmentModal]);
+  }, [userId, departmentModal, yearModal]);
 
   return (
     <>
@@ -55,6 +58,7 @@ const UserDetails = ({ setModal, userId }) => {
           userId={userId}
         />
       )}
+      {yearModal && <AssignYear setYearModal={setYearModal} userId={userId} />}
       <div
         onClick={closeModal}
         ref={ref}
@@ -71,14 +75,16 @@ const UserDetails = ({ setModal, userId }) => {
               />
             )}
             {showImage && (
-              <table className=" font-semibold">
+              <table className=" font-semibold ">
                 <thead>
                   <tr>
                     <th
                       colSpan={2}
-                      className="text-2xl bg-green-200 text-green-700 rounded-lg"
+                      className="text-2xl px-2 bg-green-200 text-green-700 rounded-lg"
                     >
-                      {user.name}
+                      {user.name.length <= 20
+                        ? user.name
+                        : user.name.substring(0, 20) + "..."}
                     </th>
                   </tr>
                 </thead>
@@ -106,7 +112,30 @@ const UserDetails = ({ setModal, userId }) => {
                   <td>Password</td>
                   <td>: {user.password}</td>
                 </tr>
-                <tr>
+                {profile.user.role === "STUDENT" ? (
+                  <tr className="border-b-2">
+                    <td>Year</td>
+                    <td>
+                      :
+                      {profile.year == null
+                        ? " Year Not Assigned"
+                        : profile.year}
+                    </td>
+                    <td>
+                      <button
+                        className="pl-6 outline-none"
+                        onClick={() => {
+                          setYearModal(true);
+                        }}
+                      >
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                ) : (
+                  <></>
+                )}
+                <tr className="border-b-2">
                   <td>Department</td>
                   <td>
                     :
@@ -114,16 +143,14 @@ const UserDetails = ({ setModal, userId }) => {
                       ? " Not Assigned"
                       : " " + profile.department.name}
                   </td>
-                </tr>
-                <tr>
-                  <td colSpan={2} className="text-center">
+                  <td>
                     <button
+                      className="pl-6 outline-none"
                       onClick={() => {
                         setDepartmentModal(true);
                       }}
-                      className="bg-white border-2 border-green-700 text-green-700 px-2 py-1 rounded-lg"
                     >
-                      Update Department
+                      Edit
                     </button>
                   </td>
                 </tr>

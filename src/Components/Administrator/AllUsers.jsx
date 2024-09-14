@@ -45,6 +45,7 @@ const AllUsers = () => {
               >
                 <div className="flex flex-col items-center">
                   <img
+                    loading="lazy"
                     src={s.photo.substring(54)}
                     alt="Profile"
                     className="object-cover w-32 h-32 rounded-full"
@@ -65,6 +66,7 @@ const AllUsers = () => {
                       ? s.department.name
                       : "Department Not Assigned"}
                   </h1>
+                  <h1>{s.year===null?"----":s.year}</h1>
                 </div>
                 <button
                   onClick={() => {
@@ -93,6 +95,7 @@ const AllUsers = () => {
               >
                 <div className="flex flex-col items-center">
                   <img
+                    loading="lazy"
                     src={f.photo.substring(54)}
                     alt="Profile"
                     className="object-cover w-32 h-32 rounded-full"
