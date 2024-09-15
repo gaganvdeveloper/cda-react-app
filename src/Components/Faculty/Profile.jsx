@@ -13,16 +13,17 @@ const Profile = () => {
   const [phone, setPhone] = useState("");
   const [modal, setModal] = useState(false);
   const [departmentName, setDepartmentName] = useState("");
+  const [reload, setReload] = useState(false);
 
   const imageSubmit = (file) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("id", id);
-
     axios
       .patch(`http://${Ip}/facultyprofiles`, formData)
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
+        setReload(!reload);
       })
       .catch((error) => {
         console.log(error);
@@ -47,7 +48,7 @@ const Profile = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [id, modal]);
+  }, [id, modal, reload]);
 
   return (
     <>
@@ -60,46 +61,53 @@ const Profile = () => {
           officeHours1={officeHours}
         />
       )}
-      <div className="px-40 py-10 flex items-center justify-center">
-        <div className="bg-purple-100 flex  justify-center gap-4 px-10 py-8 rounded-3xl">
+      <div className="px-4 bg-green-100 h-screen md:px-20 py-10 flex items-start justify-center">
+        <div className="bg-purple-100 flex flex-wrap justify-center gap-6 px-4 md:px-10 py-8 rounded-3xl">
+          {/* Image section */}
           <img
             src={photo.substring(54)}
             alt="Profile"
-            className="w-96 h-96 object-cover rounded-full"
+            className="w-60 h-60 object-cover rounded-full"
           />
-          <div className="flex flex-col gap-2 items-center ">
-            <h1 className="text-2xl font-bold text-white px-28 py-2 rounded-lg bg-yellow-500">
-              Faculty Informtion
+
+          {/* Info section */}
+          <div className="flex flex-col gap-4 items-center text-center sm:text-left">
+            <h1 className="text-2xl font-bold text-white px-8 py-2 rounded-lg bg-yellow-500">
+              Faculty Information
             </h1>
-            <table
-              className=" text-green-600 border-collapse border *:text-xl *:font-semibold"
-              cellPadding={10}
-            >
-              <thead>
-                <tr>
-                  <th colSpan={2}>Faculty Information</th>
-                </tr>
-              </thead>
+            <table className="text-green-600 border-collapse text-sm sm:text-base md:text-lg font-semibold">
               <tbody>
                 <tr>
-                  <td>Name</td> <td>: {name}</td>
+                  <td className="font-bold">Name</td>
+                  <td className="pl-2">: {name}</td>
                 </tr>
                 <tr>
-                  <td>Email</td> <td>: {email}</td>
+                  <td className="font-bold">Email</td>
+                  <td className="pl-2">: {email}</td>
                 </tr>
                 <tr>
-                  <td>Phone</td> <td>: {phone}</td>
+                  <td className="font-bold">Phone</td>
+                  <td className="pl-2">: {phone}</td>
                 </tr>
                 <tr>
-                  <td>Office Hours</td> <td>: {officeHours}</td>
+                  <td className="font-bold">Office Hours</td>
+                  <td className="pl-2">: {officeHours}</td>
                 </tr>
                 <tr>
-                  <td>Department</td> <td>: {departmentName}</td>
+                  <td className="font-bold">Department</td>
+                  <td className="pl-2">: {departmentName}</td>
                 </tr>
               </tbody>
             </table>
-            <div className="flex items-center justify-between w-full px-2 mt-10  *:bg-green-600 *:text-white *:font-semibold *:w-32 *:text-center *:rounded-md *:py-1 *:hover:cursor-pointer *:shadow-md *:shadow-black">
-              <label htmlFor="file">Upload Image</label>
+
+            {/* Upload and Edit buttons */}
+            <div className="flex sm:flex-row items-center justify-between w-full mt-6 gap-4">
+              <label
+                htmlFor="file"
+                className="bg-green-500 w-30 text-white font-semibold px-2 py-1 rounded-md cursor-pointer shadow-md hover:bg-green-600"
+              >
+                Upload Image
+              </label>
               <input
                 type="file"
                 name="file"
@@ -107,13 +115,11 @@ const Profile = () => {
                 className="hidden"
                 onChange={(e) => {
                   imageSubmit(e.target.files[0]);
-                  window.location.reload();
                 }}
               />
               <button
-                onClick={() => {
-                  setModal(!modal);
-                }}
+                onClick={() => setModal(!modal)}
+                className="bg-green-500 w-30 text-white font-semibold px-2 py-1 rounded-md shadow-md hover:bg-green-600"
               >
                 Edit Info
               </button>

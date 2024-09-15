@@ -19,6 +19,7 @@ import CourseHeader from "./Components/Course/CourseHeader";
 import AllCourses from "./Components/Course/AllCourses";
 import CreateCourse from "./Components/Course/CreateCourse";
 import UsersHeader from "./Components/Administrator/UsersHeader";
+import StudentCourses from "./Components/Student/StudentCourses";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const App = () => {
       path: "/student/:id",
       element: <Student />,
       children: [
+        {
+          path: "course",
+          element: <StudentCourses />,
+        },
         {
           path: "search",
           element: <Search />,

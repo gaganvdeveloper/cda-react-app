@@ -10,8 +10,6 @@ const CourseEnrollment = ({ userId, setEnrollmentModal }) => {
   };
 
   const handleEnrollment = (cid) => {
-    console.log(userId);
-    console.log(cid);
     axios
       .post(`http://${Ip}/enrollments/${userId}/${cid}`)
       .then((response) => {
@@ -40,7 +38,7 @@ const CourseEnrollment = ({ userId, setEnrollmentModal }) => {
       onClick={closeModal}
       className="z-40 fixed inset-0 backdrop-blur-md flex items-center justify-center p-4"
     >
-      <div className="h-96 w-full max-w-lg bg-slate-700 text-white px-8 py-6 rounded-xl shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-105">
+      <div className="relative h-[50vh] w-full max-w-lg bg-slate-700 text-white px-4 py-6 rounded-xl shadow-lg overflow-y-auto transform transition-transform duration-300 ease-in-out hover:scale-105">
         {courses.map((c, index) => (
           <div
             key={index}
@@ -55,7 +53,10 @@ const CourseEnrollment = ({ userId, setEnrollmentModal }) => {
                 handleEnrollment(c.id);
               }}
             />
-            <label htmlFor={c.id} className="cursor-pointer select-none">
+            <label
+              htmlFor={c.id}
+              className="cursor-pointer select-none text-sm md:text-base"
+            >
               {c.title}
             </label>
           </div>

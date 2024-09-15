@@ -13,6 +13,7 @@ const UserDetails = ({ setModal, userId }) => {
   const [departmentModal, setDepartmentModal] = useState(false);
   const [yearModal, setYearModal] = useState(false);
   const [courseModal, setCourseModal] = useState(false);
+
   const closeModal = (e) => {
     if (e.target === ref.current) setModal(false);
   };
@@ -65,26 +66,47 @@ const UserDetails = ({ setModal, userId }) => {
       <div
         onClick={closeModal}
         ref={ref}
-        className="z-10 fixed  inset-0 flex flex-col items-center justify-center backdrop-blur-md "
+        style={{
+          position: "fixed",
+          inset: "0",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backdropFilter: "blur(8px)",
+          backgroundColor: "rgba(0, 0, 0, 0.3)",
+        }}
       >
-        <div className="w-[95%] md:w-[90%] lg:w-1/2 bg-slate-500 text-white rounded-2xl px-8 py-8">
-          <div className="flex flex-col gap-2 items-center lg:flex-row lg:items-start justify-evenly ">
+        <div
+          style={{
+            position: "relative",
+            width: "90%", // Adjust width for smaller screens
+            maxWidth: "1200px", // Max width for larger screens
+            backgroundColor: "#64748b",
+            color: "white",
+            borderRadius: "1rem",
+            padding: "1.5rem",
+            opacity: 0,
+            transform: "scale(0.9)",
+            animation: "slide-up 0.3s ease-in-out forwards",
+          }}
+        >
+          <div className="flex flex-col gap-4 lg:flex-row lg:gap-8 items-center lg:items-start justify-center lg:justify-between">
             {showImage && (
               <img
                 loading="lazy"
-                className="w-80 h-80 object-cover rounded-full "
+                className="w-48 h-48 object-cover rounded-full"
                 src={profile.photo.substring(54)}
                 alt="Profile"
               />
             )}
             {showImage && (
-              <>
-                <table className=" font-semibold ">
+              <div className="flex-grow">
+                <table className="w-full text-left font-semibold text-sm md:text-base">
                   <thead>
                     <tr>
                       <th
                         colSpan={2}
-                        className="text-2xl px-2 bg-green-200 text-green-700 rounded-lg"
+                        className="text-xl md:text-2xl px-2 bg-green-200 text-green-700 rounded-lg"
                       >
                         {user.name.length <= 20
                           ? user.name
@@ -92,94 +114,104 @@ const UserDetails = ({ setModal, userId }) => {
                       </th>
                     </tr>
                   </thead>
-                  <tr>
-                    <td>Email</td>
-                    <td>: {user.email}</td>
-                  </tr>
-                  <tr>
-                    <td>Phone</td>
-                    <td>: {user.phone}</td>
-                  </tr>
-                  <tr>
-                    <td>Role</td>
-                    <td>: {user.role}</td>
-                  </tr>
-                  <tr>
-                    <td>Status</td>
-                    <td>: {user.status}</td>
-                  </tr>
-                  <tr>
-                    <td>Username</td>
-                    <td>: {user.username}</td>
-                  </tr>
-                  <tr>
-                    <td>Password</td>
-                    <td>: {user.password}</td>
-                  </tr>
-                  {profile.user.role === "STUDENT" ? (
+                  <tbody>
+                    <tr>
+                      <td>Email</td>
+                      <td>: {user.email}</td>
+                    </tr>
+                    <tr>
+                      <td>Phone</td>
+                      <td>: {user.phone}</td>
+                    </tr>
+                    <tr>
+                      <td>Role</td>
+                      <td>: {user.role}</td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td>: {user.status}</td>
+                    </tr>
+                    <tr>
+                      <td>Username</td>
+                      <td>: {user.username}</td>
+                    </tr>
+                    <tr>
+                      <td>Password</td>
+                      <td>: {user.password}</td>
+                    </tr>
+                    {profile.user.role === "STUDENT" && (
+                      <tr className="border-b-2">
+                        <td>Year</td>
+                        <td>
+                          :{" "}
+                          {profile.year == null
+                            ? "Year Not Assigned"
+                            : profile.year}
+                        </td>
+                        <td>
+                          <button
+                            className="text-green-300 hover:text-green-600"
+                            onClick={() => {
+                              setYearModal(true);
+                            }}
+                          >
+                            Edit
+                          </button>
+                        </td>
+                      </tr>
+                    )}
                     <tr className="border-b-2">
-                      <td>Year</td>
+                      <td>Department</td>
                       <td>
-                        :
-                        {profile.year == null
-                          ? " Year Not Assigned"
-                          : " " + profile.year}
+                        :{" "}
+                        {profile.department === null
+                          ? "Not Assigned"
+                          : profile.department.name}
                       </td>
                       <td>
                         <button
-                          className="pl-6 outline-none"
+                          className="text-green-300 hover:text-green-600"
                           onClick={() => {
-                            setYearModal(true);
+                            setDepartmentModal(true);
                           }}
                         >
                           Edit
                         </button>
                       </td>
                     </tr>
-                  ) : (
-                    <></>
-                  )}
-                  <tr className="border-b-2">
-                    <td>Department</td>
-                    <td>
-                      :
-                      {showImage && profile.department === null
-                        ? " Not Assigned"
-                        : " " + profile.department.name}
-                    </td>
-                    <td>
-                      <button
-                        className="pl-6 outline-none"
-                        onClick={() => {
-                          setDepartmentModal(true);
-                        }}
-                      >
-                        Edit
-                      </button>
-                    </td>
-                  </tr>
-                  {profile.user.role === "STUDENT" ? (
-                    <tr>
-                      <td colSpan={2} className="py-2">
-                        <button
-                          onClick={() => {
-                            setCourseModal(true);
-                          }}
-                          className="py-1 px-2 hover:text-green-600  rounded-lg  hover:bg-white transition-all -mr-16 underline-offset-4 underline float-right"
-                        >
-                          Course Details
-                        </button>
-                      </td>
-                    </tr>
-                  ) : (
-                    <></>
-                  )}
+                    {profile.user.role === "STUDENT" && (
+                      <tr>
+                        <td colSpan={3} className="py-2 text-right">
+                          <button
+                            onClick={() => {
+                              setCourseModal(true);
+                            }}
+                            className="py-1 px-2 hover:text-green-600 rounded-lg hover:bg-white transition-all"
+                          >
+                            Course Details
+                          </button>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
                 </table>
-              </>
+              </div>
             )}
           </div>
         </div>
       </div>
+      <style jsx>{`
+        @keyframes slide-up {
+          0% {
+            transform: translateY(20px) scale(0.9);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </>
   );
 };

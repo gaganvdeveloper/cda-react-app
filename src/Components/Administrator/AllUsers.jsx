@@ -88,7 +88,7 @@ const AllUsers = () => {
                       ? s.department.name
                       : "Department Not Assigned"}
                   </h1>
-                  <h1>{s.year === null ? "----" : s.year}</h1>
+                  {/* <h1>{s.year === null ? "----" : s.year}</h1> */}
                 </div>
                 <button
                   onClick={() => {

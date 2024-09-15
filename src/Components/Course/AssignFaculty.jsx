@@ -38,9 +38,9 @@ const AssignFaculty = ({ setModal, cid }) => {
     <div
       ref={ref}
       onClick={closeModal}
-      className="z-10 fixed px-40 inset-0 bg-transparent backdrop-blur-md flex flex-col items-center py-10"
+      className="z-10 fixed px-2 lg:px-40 inset-0 bg-transparent backdrop-blur-md flex flex-col items-center justify-center py-10"
     >
-      <div className="w-full rounded-xl  bg-indigo-400 px-10 py-4 flex flex-col gap-4 items-center">
+      <div className=" h-[60vh] overflow-y-auto rounded-md  bg-indigo-400 lg:px-8 px-4 py-4 flex flex-col  gap-6 items-center ">
         <h1 className="text-2xl font-bold text-green-700 tracking-widest underline">
           Assign Faculty
         </h1>
@@ -48,7 +48,7 @@ const AssignFaculty = ({ setModal, cid }) => {
           return (
             <div
               key={index}
-              className="bg-indigo-400 border rounded-xl  text-white  min-w-full flex py-2 items-center justify-evenly"
+              className="bg-indigo-400 border rounded-xl  text-white  min-w-full flex gap-6 px-4 flex-col lg:flex-row sm:items-center sm:justify-between hover:shadow-lg hover:border-green-600 hover:scale-105 transition-all hover:bg-slate-500 py-2 items-center justify-between"
             >
               <div className="flex flex-col items-center justify-center">
                 <img
