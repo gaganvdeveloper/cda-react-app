@@ -25,10 +25,12 @@ const Classes = () => {
         Classes List
       </h1>
 
-      <div className=" grid grid-cols-3  gap-4">
+      <div className=" grid lg:grid-cols-3 grid-cols-1  gap-4">
         {enrollments.length === 0 ? (
-          <div className="h-screen text-4xl ">
-            <h1 className="text-center mt-[20vh] font-bold text-green-600 -mr-[50vw]">No Enrollments Available.</h1>
+          <div className="h-screen lg:text-4xl text-2xl ">
+            <h1 className="text-center mt-[20vh]  font-bold text-green-600 lg:-mr-[50vw]  ">
+              No Enrollments Available.
+            </h1>
           </div>
         ) : (
           enrollments.map((e, index) => {

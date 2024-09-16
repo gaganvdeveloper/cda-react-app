@@ -27,19 +27,31 @@ const Header = () => {
             </NavLink>
             <NavLink
               to="profile"
-              className="text-sm md:text-lg font-semibold hover:text-gray-200 transition duration-200"
+              className={({ isActive }) =>
+                isActive
+                  ? " underline underline-offset-4 text-sm md:text-lg font-semibold hover:text-gray-200 transition duration-200"
+                  : "text-sm md:text-lg font-semibold hover:text-gray-200 transition duration-200"
+              }
             >
               Profile
             </NavLink>
             <NavLink
               to="classes"
-              className="text-sm md:text-lg font-semibold hover:text-gray-200 transition duration-200"
+              className={({ isActive }) =>
+                isActive
+                  ? " underline underline-offset-4 text-sm md:text-lg font-semibold hover:text-gray-200 transition duration-200"
+                  : "text-sm md:text-lg font-semibold hover:text-gray-200 transition duration-200"
+              }
             >
               Classes
             </NavLink>
             <NavLink
               to="/"
-              className="text-sm md:text-lg font-semibold hover:text-red-400 transition duration-200"
+              className={({ isActive }) =>
+                isActive
+                  ? " underline text-sm md:text-lg hover:bg-white px-2 rounded-md font-semibold hover:text-red-400 transition duration-200"
+                  : "text-sm md:text-lg hover:bg-white px-2 rounded-md font-semibold hover:text-red-400 transition duration-200"
+              }
             >
               Logout
             </NavLink>
