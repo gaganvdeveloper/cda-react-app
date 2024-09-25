@@ -1,29 +1,43 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Ip from "../Util/Ip";
+import ButtonSpinner from "../Util/ButtonSpinner";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [reload, setReload] = useState(false);
+  const [buttonSpinner, setButtonSpinner] = useState(false);
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
   const nav = useNavigate();
+
+  useEffect(() => {
+    setUsername("");
+    setPassword("");
+  }, [reload]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(`http://${Ip}/users/login`, { username, password })
-      .then((response) => {
-        nav(
-          `${response.data.body.role}`.toLowerCase() +
-            "/" +
-            response.data.body.id
-        );
-      })
-      .catch((error) => {
-        alert("Invalid Username or Password");
-        console.log(error);
-        window.location.reload("/"); // Consider using navigation instead of reloading the page
-      });
+    setTimeout(() => {
+      axios
+        .post(`http://${Ip}/users/login`, { username, password })
+        .then((response) => {
+          nav(
+            `${response.data.body.role}`.toLowerCase() +
+              "/" +
+              response.data.body.id
+          );
+
+          setInvalidCredentials(!invalidCredentials);
+        })
+        .catch((error) => {
+          console.log(error);
+          setReload(!reload);
+          setButtonSpinner(false);
+          setInvalidCredentials(true);
+        });
+    }, 2000);
   };
 
   return (
@@ -36,6 +50,11 @@ const Login = () => {
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-700">
           Login Here
         </h1>
+        {invalidCredentials && (
+          <h1 className="text-red-500 shadow-sm shadow-red-500 px-2 py-1 rounded-lg w-fit  text-center m-auto">
+            Invalid Credentilas Please Check it
+          </h1>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
@@ -48,6 +67,7 @@ const Login = () => {
               type="text"
               name="username"
               id="username"
+              value={username}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -63,15 +83,22 @@ const Login = () => {
               type="password"
               name="password"
               id="password"
+              value={password}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-300"
+            onClick={() => {
+              setButtonSpinner(true);
+              setInvalidCredentials(false);
+            }}
+            className={`${
+              buttonSpinner ? `` : ``
+            }    w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-300`}
           >
-            Login
+            {buttonSpinner ? <ButtonSpinner /> : "Login"}
           </button>
         </form>
       </div>

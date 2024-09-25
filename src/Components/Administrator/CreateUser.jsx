@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Ip from "../../Util/Ip";
 import { useNavigate, useParams } from "react-router-dom";
+import ButtonSpinner from "../../Util/ButtonSpinner";
 
 const CreateUser = () => {
   const { id } = useParams();
@@ -10,7 +11,8 @@ const CreateUser = () => {
   const [phone, setPhone] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("STUDENT");
+  const [buttonSpinner, setButtonSpinner] = useState(false);
   const nav = useNavigate();
 
   const handleSubmit = (e) => {
@@ -144,9 +146,12 @@ const CreateUser = () => {
 
           <button
             type="submit"
+            onClick={() => {
+              setButtonSpinner(true);
+            }}
             className="w-full bg-green-500 text-white font-semibold py-2 rounded-md hover:bg-green-600 transition duration-200"
           >
-            Create
+            {buttonSpinner ? <ButtonSpinner /> : "Create"}
           </button>
         </form>
       </div>

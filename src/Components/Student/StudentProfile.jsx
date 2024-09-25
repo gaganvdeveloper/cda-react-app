@@ -11,6 +11,7 @@ const StudentProfile = ({ setStudentProfileModal }) => {
   const [user, setUser] = useState();
   const [profile, setProfile] = useState();
   const [department, setDepartment] = useState();
+  
   const closeModal = (e) => {
     if (e.target === ref.current) setStudentProfileModal(false);
   };
@@ -101,7 +102,7 @@ const StudentProfile = ({ setStudentProfileModal }) => {
                   }}
                 />
                 <label
-                  className="border-2 text-center border-green-600 px-2 w-[35vw] rounded-md text-green-600 font-bold "
+                  className="border-2 cursor-pointer text-center border-green-600 px-2 w-[35vw] rounded-md text-green-600 font-bold "
                   htmlFor="file"
                 >
                   Update Image
