@@ -40,7 +40,7 @@ const Classes = () => {
                 className="bg-green-300 min-h-40 flex flex-col items-center justify-center gap-4 px-4 py-4 hover:bg-green-400 hover:scale-105 transition-all rounded-lg shadow-lg"
               >
                 <img
-                  src={e.student.photo.substring(54)}
+                  src={e.student.photo}
                   alt="Profile"
                   className="w-40 h-40 md:w-40 md:h-40 lg:w-60 lg:h-60 rounded-full object-cover"
                 />

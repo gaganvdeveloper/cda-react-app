@@ -58,7 +58,7 @@ const StudentProfile = ({ setStudentProfileModal }) => {
             <div className="flex flex-col items-center space-y-6 ">
               {/* Profile Image */}
               <img
-                src={profile.photo.substring(54)}
+                src={profile.photo}
                 alt="Profile"
                 className="h-40 w-40 rounded-full object-cover ring-4 ring-green-300 shadow-md"
               />

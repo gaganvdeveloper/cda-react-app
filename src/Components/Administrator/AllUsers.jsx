@@ -68,7 +68,7 @@ const AllUsers = () => {
                 <div className="flex flex-col items-center">
                   <img
                     loading="lazy"
-                    src={s.photo.substring(54)}
+                    src={s.photo}
                     alt="Profile"
                     className="object-cover w-32 h-32 rounded-full"
                   />
@@ -118,7 +118,7 @@ const AllUsers = () => {
                 <div className="flex flex-col items-center">
                   <img
                     loading="lazy"
-                    src={f.photo.substring(54)}
+                    src={f.photo}
                     alt="Profile"
                     className="object-cover w-32 h-32 rounded-full"
                   />

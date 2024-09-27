@@ -52,7 +52,7 @@ const AssignFaculty = ({ setModal, cid }) => {
             >
               <div className="flex flex-col items-center justify-center">
                 <img
-                  src={f.photo.substring(54)}
+                  src={f.photo}
                   alt="Profile"
                   className="w-40 h-40 rounded-full object-cover"
                 />

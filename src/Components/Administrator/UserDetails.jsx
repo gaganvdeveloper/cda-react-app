@@ -95,7 +95,7 @@ const UserDetails = ({ setModal, userId }) => {
               <img
                 loading="lazy"
                 className="w-48 h-48 object-cover rounded-full"
-                src={profile.photo.substring(54)}
+                src={profile.photo}
                 alt="Profile"
               />
             )}
