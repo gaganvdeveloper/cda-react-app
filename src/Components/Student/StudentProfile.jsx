@@ -11,7 +11,7 @@ const StudentProfile = ({ setStudentProfileModal }) => {
   const [user, setUser] = useState();
   const [profile, setProfile] = useState();
   const [department, setDepartment] = useState();
-  
+
   const closeModal = (e) => {
     if (e.target === ref.current) setStudentProfileModal(false);
   };
@@ -56,41 +56,44 @@ const StudentProfile = ({ setStudentProfileModal }) => {
         >
           <div className="modal-content">
             <div className="flex flex-col items-center space-y-6 ">
-              {/* Profile Image */}
               <img
                 src={profile.photo}
                 alt="Profile"
                 className="h-40 w-40 rounded-full object-cover ring-4 ring-green-300 shadow-md"
               />
+              <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <thead>
+                  <tr className="bg-gray-100 text-gray-700 text-left">
+                    <th className="py-3 px-4">Field</th>
+                    <th className="py-3 px-4">Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b">
+                    <td className="py-2 px-4 font-semibold">Name</td>
+                    <td className="py-2 px-4">{user.name}</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-2 px-4 font-semibold">Email</td>
+                    <td className="py-2 px-4">{user.email}</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-2 px-4 font-semibold">Phone</td>
+                    <td className="py-2 px-4">{user.phone}</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-2 px-4 font-semibold">Department</td>
+                    <td className="py-2 px-4">
+                      {department == null ? "" : department.name}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-4 font-semibold">Year</td>
+                    <td className="py-2 px-4">{profile.year}</td>
+                  </tr>
+                </tbody>
+              </table>
 
-              {/* User Information */}
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-900">
-                  {user.name}
-                </h1>
-                <p className="text-sm text-gray-600">{user.email}</p>
-                <p className="text-sm text-gray-600">{user.phone}</p>
-              </div>
-
-              {/* Department and Year */}
-              <div className="bg-green-100 px-4 py-2 rounded-lg shadow-sm text-green-700">
-                <h2 className="text-lg font-semibold">
-                  {department == null
-                    ? "No Department Assigned"
-                    : department.name}
-                </h2>
-                <p className="text-sm">{profile.year} Year</p>
-              </div>
-
-              {/* Username and Password */}
-              <div className="w-full space-y-2 text-center">
-                <div className="text-sm text-gray-600">
-                  <strong>Username:</strong> {user.username}
-                </div>
-                <div className="text-sm text-gray-600">
-                  <strong>Password:</strong> {user.password}
-                </div>
-              </div>
               <div className="flex items-center lg:gap-10 md:gap-8 justify-between w-full">
                 <input
                   className="hidden"

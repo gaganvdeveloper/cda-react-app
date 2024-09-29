@@ -20,12 +20,17 @@ import AllCourses from "./Components/Course/AllCourses";
 import CreateCourse from "./Components/Course/CreateCourse";
 import UsersHeader from "./Components/Administrator/UsersHeader";
 import StudentCourses from "./Components/Student/StudentCourses";
+import CreateAccount from "./Components/Administrator/CreateAccount";
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Login />,
       errorElement: <h1>404 Error</h1>,
+    },
+    {
+      path: "/createaccount",
+      element: <CreateAccount />,
     },
     {
       path: "/student/:id",

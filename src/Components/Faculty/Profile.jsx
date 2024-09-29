@@ -65,7 +65,7 @@ const Profile = () => {
         <div className="bg-purple-100 flex flex-wrap justify-center gap-6 px-4 md:px-10 py-8 rounded-3xl">
           {/* Image section */}
           <img
-            src={photo.substring(54)}
+            src={photo}
             alt="Profile"
             className="w-60 h-60 object-cover rounded-full"
           />

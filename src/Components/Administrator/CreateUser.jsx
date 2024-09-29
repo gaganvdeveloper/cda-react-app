@@ -135,9 +135,7 @@ const CreateUser = () => {
               required
               onChange={(e) => setRole(e.target.value)}
             >
-              <option value="" disabled>
-                ----SELECT----
-              </option>
+              <option value="STUDENT">----SELECT----</option>
               <option value="STUDENT">STUDENT</option>
               <option value="FACULTY">FACULTY</option>
               <option value="ADMINISTRATOR">ADMINISTRATOR</option>

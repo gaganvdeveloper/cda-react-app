@@ -22,13 +22,8 @@ const Search = () => {
       });
   }, [reload, searchQuery, studentsDetaislModal]);
 
-  const filteredStudents = students.filter(
-    (student) =>
-      student.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      student.department.name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      student.year.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredStudents = students.filter((student) =>
+    student.user.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -85,8 +80,16 @@ const Search = () => {
                         ? student.user.name
                         : student.user.name.substring(0, 8) + "..."}
                     </td>
-                    <td className="px-4 py-2">{student.department.name}</td>
-                    <td className="px-4 py-2">{student.year}</td>
+                    <td className="px-4 py-2">
+                      {student.department === null
+                        ? "Department Not Assigned"
+                        : student.department.name}
+                    </td>
+                    <td className="px-4 py-2">
+                      {student.year === null
+                        ? "Year Not Assigned"
+                        : student.year}
+                    </td>
                   </tr>
                 ))
               ) : (

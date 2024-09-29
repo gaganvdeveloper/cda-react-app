@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Ip from "../Util/Ip";
 import ButtonSpinner from "../Util/ButtonSpinner";
 
@@ -45,13 +45,13 @@ const Login = () => {
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         {/* Logo Section */}
         <div className="flex items-center justify-center mb-6">
-          <div className="text-4xl font-bold text-green-600">CDA</div>
+          <div className="text-4xl font-bold tracking-widest  text-green-600">CDA</div>
         </div>
-        <h1 className="text-2xl font-bold text-center mb-6 text-gray-700">
+        <h1 className="text-2xl  font-bold text-center mb-6 text-gray-700">
           Login Here
         </h1>
         {invalidCredentials && (
-          <h1 className="text-red-500 shadow-sm shadow-red-500 px-2 py-1 rounded-lg w-fit  text-center m-auto">
+          <h1 className="text-red-500 shadow-sm shadow-red-500 px-2 py-1 mb-2 rounded-lg w-fit  text-center m-auto">
             Invalid Credentilas Please Check it
           </h1>
         )}
@@ -64,6 +64,7 @@ const Login = () => {
               Username:
             </label>
             <input
+              required
               type="text"
               name="username"
               id="username"
@@ -80,6 +81,7 @@ const Login = () => {
               Password:
             </label>
             <input
+              required
               type="password"
               name="password"
               id="password"
@@ -95,11 +97,19 @@ const Login = () => {
               setInvalidCredentials(false);
             }}
             className={`${
-              buttonSpinner ? `` : ``
-            }    w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-300`}
+              buttonSpinner
+                ? ` cursor-not-allowed bg-green-400 `
+                : `bg-green-500 hover:bg-green-600`
+            }    w-full  text-white py-2 outline-none rounded-md  transition duration-300`}
           >
             {buttonSpinner ? <ButtonSpinner /> : "Login"}
           </button>
+          <h1 className="text-slate-500 text-center">
+            Don't have Account?...&nbsp;&nbsp;&nbsp;&nbsp;
+            <Link to="/createaccount" className=" text-indigo-600 underline ">
+              Create Account
+            </Link>
+          </h1>
         </form>
       </div>
     </div>
