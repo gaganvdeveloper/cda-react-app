@@ -1,11 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import StudentProfile from "./StudentProfile";
+import axios from "axios";
+import Ip from "../../Util/Ip";
 
 const Header = () => {
   const { id } = useParams();
-
   const [studentProfileModal, setStudentProfileModal] = useState(false);
+  const [profile, setProfile] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`http://${Ip}/studentprofiles/${id}`)
+      .then((response) => {
+        console.log(response.data.body.photo);
+        setProfile(response.data.body.photo);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id]);
+
   return (
     <>
       {studentProfileModal && (
@@ -35,7 +50,11 @@ const Header = () => {
                   : "text-sm md:text-lg font-semibold no-underline "
               }
             >
-              Profile
+              <img
+                src={profile}
+                className="w-10 shadow-lg shadow-slate-500 h-10 rounded-full ring-1 ring-green-600 "
+                alt="Profile"
+              />
             </NavLink>
 
             <NavLink

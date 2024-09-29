@@ -118,6 +118,14 @@ const StudentProfile = ({ setStudentProfileModal }) => {
                 >
                   Close
                 </button>
+                <button
+                  onClick={() => {
+                    setStudentProfileModal(false);
+                  }}
+                  className="border-2 border-red-700 px-2 w-[35vw] rounded-md text-red-700 font-bold "
+                >
+                  Logout
+                </button>
               </div>
             </div>
           </div>
