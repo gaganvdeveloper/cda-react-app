@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Ip from "../../Util/Ip";
+import { CircleXIcon } from "lucide-react";
 
 const StudentProfile = ({ setStudentProfileModal }) => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const StudentProfile = ({ setStudentProfileModal }) => {
   const [user, setUser] = useState();
   const [profile, setProfile] = useState();
   const [department, setDepartment] = useState();
-
+  const nav = useNavigate();
   const closeModal = (e) => {
     if (e.target === ref.current) setStudentProfileModal(false);
   };
@@ -55,7 +56,7 @@ const StudentProfile = ({ setStudentProfileModal }) => {
           className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black bg-opacity-50 backdrop-blur-sm"
         >
           <div className="modal-content">
-            <div className="flex flex-col items-center space-y-6 ">
+            <div className="flex flex-col items-center space-y-4 ">
               <img
                 src={profile.photo}
                 alt="Profile"
@@ -112,21 +113,20 @@ const StudentProfile = ({ setStudentProfileModal }) => {
                 </label>
                 <button
                   onClick={() => {
-                    setStudentProfileModal(false);
-                  }}
-                  className="border-2 border-red-700 px-2 w-[35vw] rounded-md text-red-700 font-bold "
-                >
-                  Close
-                </button>
-                <button
-                  onClick={() => {
-                    setStudentProfileModal(false);
+                    nav("/");
                   }}
                   className="border-2 border-red-700 px-2 w-[35vw] rounded-md text-red-700 font-bold "
                 >
                   Logout
                 </button>
               </div>
+              <CircleXIcon
+                onClick={() => {
+                  setStudentProfileModal(false);
+                }}
+                size={20}
+                color="red"
+              />
             </div>
           </div>
         </div>
@@ -136,7 +136,10 @@ const StudentProfile = ({ setStudentProfileModal }) => {
         .modal-content {
           background-color: white;
           border-radius: 1rem;
-          padding: 2rem;
+          padding-left: 2rem;
+          padding-right: 2rem;
+          padding-top: 1rem;
+          padding-bottom: 0.5rem;
           width: 100%;
           max-width: 24rem;
           box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);

@@ -24,23 +24,31 @@ const StudentCourses = () => {
         Your Courses
       </h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-8  ">
-        {enrollments.map((e, index) => {
-          return (
-            <div
-              key={index}
-              className="bg-green-300 hover:shadow-lg min-h-32 hover:shadow-slate-400 hover:bg-green-600 px-6 py-4 rounded-lg hover:text-white hover:scale-105 transition-all"
-            >
-              <h1 className="text-center rounded-lg   bg-amber-200 font-bold text-green-700">
-                {e.course.title}
-              </h1>
-              <div className="font-semibold">
-                <h1>Department : {e.course.department.name}</h1>
-                <h1>Faculty : {e.course.faculty.user.name}</h1>
+        {enrollments.length > 0 &&
+          enrollments.map((e, index) => {
+            return (
+              <div
+                key={index}
+                className="bg-green-300 hover:shadow-lg min-h-32 hover:shadow-slate-400 hover:bg-green-600 px-6 py-4 rounded-lg hover:text-white hover:scale-105 transition-all"
+              >
+                <h1 className="text-center rounded-lg   bg-amber-200 font-bold text-green-700">
+                  {e.course.title}
+                </h1>
+                <div className="font-semibold">
+                  <h1>Department : {e.course.department.name}</h1>
+                  <h1>Faculty : {e.course.faculty.user.name}</h1>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
+      {enrollments.length === 0 && (
+        <div className="">
+          <h1 className="text-xl text-center text-slate-500">
+            You Are Not Enrolled for any Course... contact admin for enrollment
+          </h1>
+        </div>
+      )}
     </div>
   );
 };

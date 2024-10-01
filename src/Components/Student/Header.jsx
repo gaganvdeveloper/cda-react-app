@@ -19,7 +19,7 @@ const Header = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [id]);
+  }, [id, studentProfileModal]);
 
   return (
     <>
@@ -30,7 +30,7 @@ const Header = () => {
         <div className="container mx-auto flex justify-between items-center flex-wrap">
           <div className="flex items-center flex-wrap space-x-2">
             <NavLink
-              to={`/student/${id}`}
+              to={`/student/${id}/course`}
               className="text-3xl md:text-4xl font-extrabold tracking-widest uppercase"
             >
               <span className="text-yellow-300 mx-1">C</span>
@@ -39,27 +39,9 @@ const Header = () => {
             </NavLink>
           </div>
 
-          <nav className="flex space-x-4 md:space-x-8 mt-4 md:mt-0">
-            <NavLink
-              onClick={() => {
-                setStudentProfileModal(true);
-              }}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-sm md:text-lg font-semibold"
-                  : "text-sm md:text-lg font-semibold no-underline "
-              }
-            >
-              <img
-                src={profile}
-                className="w-10 shadow-lg shadow-slate-500 h-10 rounded-full ring-1 ring-green-600 "
-                alt="Profile"
-              />
-            </NavLink>
-
+          <nav className="flex items-center space-x-4 md:space-x-8 mt-4 md:mt-0">
             <NavLink
               to="course"
-              // className="text-sm md:text-lg font-semibold hover:text-gray-200 transition duration-200"
               className={({ isActive }) =>
                 isActive
                   ? "text-sm md:text-lg font-semibold underline  underline-offset-4"
@@ -70,7 +52,6 @@ const Header = () => {
             </NavLink>
             <NavLink
               to="search"
-              // className="text-sm md:text-lg font-semibold hover:text-gray-200 transition duration-200"
               className={({ isActive }) =>
                 isActive
                   ? "text-sm md:text-lg font-semibold underline  underline-offset-4"
@@ -79,13 +60,14 @@ const Header = () => {
             >
               Search
             </NavLink>
-
-            <NavLink
-              to="/"
-              className="text-sm md:text-lg font-semibold hover:text-red-700 hover:border-white px-2 hover:bg-white rounded-md border border-green-500 transition duration-200 "
-            >
-              Logout
-            </NavLink>
+            <img
+              onClick={() => {
+                setStudentProfileModal(true);
+              }}
+              src={profile}
+              className="w-10 shadow-lg shadow-slate-500 h-10 rounded-full ring-1 ring-green-600 "
+              alt="Profile"
+            />
           </nav>
         </div>
       </header>

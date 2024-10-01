@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Ip from "../../Util/Ip";
-import UserDetails from "../Administrator/UserDetails";
 import { PuffLoader } from "react-spinners";
+import SearchProfile from "./SearchProfile";
 
 const Search = () => {
-  const [id, setId] = useState(0);
+  const [photo, setPhoto] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [students, setStudents] = useState([]);
   const [studentsDetaislModal, setStudentsDetaislModal] = useState(false);
@@ -29,7 +29,10 @@ const Search = () => {
   return (
     <>
       {studentsDetaislModal && (
-        <UserDetails setModal={setStudentsDetaislModal} userId={id} />
+        <SearchProfile
+          photo={photo}
+          setStudentsDetaislModal={setStudentsDetaislModal}
+        />
       )}
       <div className="p-4 lg:px-48 md:px-20   bg-green-100 min-h-screen">
         <h2 className="text-2xl text-green-700 font-bold mb-4">
@@ -38,7 +41,7 @@ const Search = () => {
         <div className="flex mb-4">
           <input
             type="text"
-            placeholder="Search by name, department, or year"
+            placeholder="Type name to search"
             className="p-2 border outline-green-600 border-gray-300 rounded-md flex-grow"
             value={searchQuery}
             onChange={(e) => {
@@ -58,6 +61,7 @@ const Search = () => {
           <table className="min-w-full border border-gray-200 rounded-md">
             <thead>
               <tr className="bg-green-500 text-white">
+                <th className="px-4 py-2">Profile</th>
                 <th className="px-4 py-2">Name</th>
                 <th className="px-4 py-2">Department</th>
                 <th className="px-4 py-2">Year</th>
@@ -67,14 +71,20 @@ const Search = () => {
               {filteredStudents.length > 0 && searchQuery.length > 0 ? (
                 filteredStudents.map((student, index) => (
                   <tr
-                    onClick={() => {
-                      console.log(student.id);
-                      setId(student.id);
-                      setStudentsDetaislModal(true);
-                    }}
                     key={index}
-                    className="border-t hover:bg-white  hover:text-green-700 border-gray-200"
+                    className="border-t *:text-center hover:bg-white  hover:text-green-700 border-gray-200"
                   >
+                    <td className="px-4 py-2">
+                      <img
+                        onClick={() => {
+                          setPhoto(student.photo);
+                          setStudentsDetaislModal(true);
+                        }}
+                        src={student.photo}
+                        alt="Profile"
+                        className="w-16 rounded-full  "
+                      />
+                    </td>
                     <td className="px-4 py-2">
                       {(student.user.name + "").length < 15
                         ? student.user.name
@@ -94,7 +104,7 @@ const Search = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="3" className="px-4 py-2 text-center">
+                  <td colSpan="4" className="px-4 py-2 text-center">
                     No students found.
                   </td>
                 </tr>

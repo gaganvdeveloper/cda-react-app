@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ButtonSpinner from "../../Util/ButtonSpinner";
 import Ip from "../../Util/Ip";
+import SuccessModal from "../../Util/SuccessModal";
 
 const CreateAccount = () => {
   const [name, setName] = useState("");
@@ -11,8 +12,7 @@ const CreateAccount = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [buttonSpinner, setButtonSpinner] = useState(false);
-
-  const nav = useNavigate();
+  const [successModal, setSuccessModal] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,10 +20,7 @@ const CreateAccount = () => {
     axios
       .post(`http://${Ip}/users`, payload)
       .then((response) => {
-        console.log(response.data);
-        setTimeout(() => {
-          nav("/");
-        }, 10000);
+        setSuccessModal(true);
       })
       .catch((error) => {
         console.log(error);
@@ -34,6 +31,7 @@ const CreateAccount = () => {
 
   return (
     <>
+      {successModal && <SuccessModal a={setSuccessModal} name={name} />}
       <div className="min-h-screen flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">
         <div className="bg-white p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-xl">
           <div className="flex items-center justify-center mb-6">
